@@ -29,5 +29,9 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|img|favicon.ico|robots.txt|sitemap.xml).*)"],
+  // Skip API routes, Next internals, and ANYTHING with a file extension. Listing files
+  // by name is a trap: /icon.svg was getting redirected to /zh-hant/icon.svg, so the
+  // favicon 307'd instead of loading. Matching on the dot covers every asset we add
+  // later without anyone having to remember this.
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
 };

@@ -9,7 +9,7 @@
 export const SITE = {
   domain: "gpr8.com",
   url: "https://www.gpr8.com",
-  email: "kent@globalpresources.com",
+  email: "ops@globalpresources.com",
   phone: "+852 5617 8624",
   // E.164, for the tel: link — the display string above carries the spaces.
   phoneHref: "+85256178624",

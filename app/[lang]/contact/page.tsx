@@ -1,186 +1,115 @@
-// This will be a server component
-
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { notFound } from "next/navigation";
 import { getDictionary } from "../../lib/dictionary";
-import ContactForm from "./ContactForm";
+import { SITE, isLocale } from "../../lib/site";
+import { ContactForm } from "../../components/contact-form";
+import { MailIcon, PhoneIcon, ChatIcon, PinIcon, ClockIcon } from "../../components/icons";
 
 export default async function ContactPage({
-  params: { lang },
+  params,
 }: {
   params: { lang: string };
 }) {
+  if (!isLocale(params.lang)) notFound();
+  const lang = params.lang;
   const dict = await getDictionary(lang);
+  const info = dict.contact.info;
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100">
-      <header className="px-4 lg:px-6 h-14 flex items-center border-b border-indigo-200">
-        <Link className="flex items-center justify-center" href="/"></Link>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link
-            className="text-sm font-medium text-black hover:text-indigo-600 transition-colors"
-            href={`/${lang}`}
-          >
-            {dict.navigation.home}
-          </Link>
-          <Link
-            className="text-sm font-medium text-black hover:text-indigo-600 transition-colors"
-            href={`/${lang}/about`} // Changed from "/about" to "/${lang}/about"
-          >
-            {dict.navigation.about}
-          </Link>
-          <Link
-            className="text-sm font-medium text-black hover:text-indigo-600 transition-colors"
-            href="#products"
-          >
-            {dict.navigation.products}
-          </Link>
-          <Link
-            className="text-sm font-medium text-black hover:text-indigo-600 transition-colors"
-            href="/faqs"
-          >
-            {dict.navigation.faqs}
-          </Link>
-          <Link
-            className="text-sm font-medium text-black hover:text-indigo-600 transition-colors"
-            href={`/${lang}/contact`} // Use the lang parameter from your page props
-          >
-            {dict.navigation.contact}
-          </Link>
-        </nav>
-      </header>
-      <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-indigo-900 text-white">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="w-full md:w-1/2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none mb-4">
-                  {dict.contact.title}
-                </h1>
-                <p className="text-2xl font-semibold text-indigo-200 mb-8">
-                  {dict.contact.subtitle}
-                </p>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-700 text-white font-bold">
-                      01
-                    </span>
-                    <p className="text-lg text-indigo-200">
-                      {dict.contact.benefits.consultation}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-700 text-white font-bold">
-                      02
-                    </span>
-                    <p className="text-lg text-indigo-200">
-                      {dict.contact.benefits.exclusive}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-700 text-white font-bold">
-                      03
-                    </span>
-                    <p className="text-lg text-indigo-200">
-                      {dict.contact.benefits.convenient}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full md:w-1/2">
-              <Image
-                  src="/images/CustomerService.png"
-                  alt="Customer Service Representative"
-                  width={400}
-                  height={400}
-                  className="rounded-lg object-cover w-full"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-10 sm:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-black">
-                    {dict.contact.info.title}
-                  </CardTitle>
-                  <CardDescription className="text-gray-600">
-                    {dict.contact.info.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center space-x-4">
-                    <Phone className="text-indigo-600" />
-                    <span className="text-black">
-                      {dict.contact.info.phone}
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <MessageCircle className="text-indigo-600" />
-                    <span className="text-black">
-                      {" "}
-                      {dict.contact.info.wechatwhatsapp}
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <MapPin className="text-indigo-600" />
-                    <span className="text-black">
-                      {dict.contact.info.address}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-black">
-                    {dict.contact.form.title}
-                  </CardTitle>
-                  <CardDescription className="text-gray-600">
-                    {dict.contact.form.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ContactForm dict={dict} />
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-      </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-indigo-200">
-        <p className="text-xs text-indigo-600">
-          © 2024 Global Partner & Resources Limited. All rights reserved.
+    <div className="mx-auto max-w-page px-6 py-20 lg:py-28">
+      <div className="max-w-3xl">
+        <p className="eyebrow">{dict.contact.eyebrow}</p>
+        <h1 className="mt-6 font-display text-5xl font-bold leading-tight sm:text-6xl">
+          {dict.contact.title}
+        </h1>
+        <p className="mt-8 text-lg leading-relaxed text-muted">
+          {dict.contact.lead}
         </p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link
-            className="text-xs hover:underline underline-offset-4 text-indigo-600"
-            href="#"
-          >
-            Terms of Service
-          </Link>
-          <Link
-            className="text-xs hover:underline underline-offset-4 text-indigo-600"
-            href="#"
-          >
-            Privacy
-          </Link>
-        </nav>
-      </footer>
+      </div>
+
+      <div className="mt-16 grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+        {/* Direct channels. Email leads — it is the thing that was missing. */}
+        <div>
+          <h2 className="eyebrow">{info.title}</h2>
+          <div className="rule-gold mt-5" />
+
+          <dl className="mt-8 space-y-7">
+            <div className="flex gap-4">
+              <MailIcon className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
+              <div>
+                <dt className="text-[0.68rem] uppercase tracking-widest text-muted">
+                  {info.emailLabel}
+                </dt>
+                <dd className="mt-1.5">
+                  <a
+                    href={`mailto:${SITE.email}`}
+                    className="break-all font-display text-xl font-bold text-text transition-colors hover:text-gold-bright"
+                  >
+                    {SITE.email}
+                  </a>
+                </dd>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <PhoneIcon className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
+              <div>
+                <dt className="text-[0.68rem] uppercase tracking-widest text-muted">
+                  {info.phoneLabel}
+                </dt>
+                <dd className="mt-1.5">
+                  <a
+                    href={`tel:${SITE.phoneHref}`}
+                    className="tabular font-display text-xl font-bold text-text transition-colors hover:text-gold-bright"
+                  >
+                    {SITE.phone}
+                  </a>
+                </dd>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <ChatIcon className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
+              <div>
+                <dt className="text-[0.68rem] uppercase tracking-widest text-muted">
+                  {info.messagingLabel}
+                </dt>
+                <dd className="tabular mt-1.5 text-text">{SITE.phone}</dd>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <PinIcon className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
+              <div>
+                <dt className="text-[0.68rem] uppercase tracking-widest text-muted">
+                  {info.addressLabel}
+                </dt>
+                <dd className="mt-1.5 leading-relaxed text-text">
+                  {SITE.address[lang]}
+                </dd>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <ClockIcon className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
+              <div>
+                <dt className="text-[0.68rem] uppercase tracking-widest text-muted">
+                  {info.hoursLabel}
+                </dt>
+                <dd className="mt-1.5 text-text">{info.hoursValue}</dd>
+              </div>
+            </div>
+          </dl>
+        </div>
+
+        <div className="rounded-sm border border-gold/15 bg-surface/70 p-8 lg:p-10">
+          <h2 className="font-display text-2xl font-bold">
+            {dict.contact.form.title}
+          </h2>
+          <div className="mt-8">
+            <ContactForm dict={dict} lang={lang} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,133 +1,184 @@
 {
-  "navigation": {
+  "meta": {
+    "title": "Global Partner & Resources Limited — Physical Gold Bullion, Hong Kong",
+    "description": "A Hong Kong physical gold dealer. 1kg investment bars at 99.99% fineness from Heraeus and Metalor, with vaulting and physical delivery."
+  },
+  "company": {
+    "name": "Global Partner & Resources Limited",
+    "short": "GPR",
+    "tagline": "Physical gold, held in Hong Kong."
+  },
+  "nav": {
     "home": "Home",
+    "bullion": "Bullion",
     "about": "About",
-    "contact": "Contact",
-    "products": "Products",
-    "faqs": "FAQs"
+    "contact": "Contact"
   },
   "hero": {
-    "title": "Global Partner & Resources Limited",
-    "subtitle": "Your Trusted Gold Trading Partner",
-    "description": "Professional Gold Trading Services",
-    "viewProducts": "View Products",
-    "learnMore": "Learn More"
+    "eyebrow": "Hong Kong · Physical Bullion",
+    "titleTop": "Gold you can collect,",
+    "titleBottom": "weigh, and take home.",
+    "body": "We supply investment-grade 1kg bars at 99.99% fineness from Heraeus and Metalor. Settled in Hong Kong, vaulted or delivered — the metal is real, and it is yours.",
+    "primary": "Request a quote",
+    "secondary": "How we work"
   },
-  "products": {
-    "title": "Latest Gold Bar Offerings",
-    "goldBar": "1KG Gold Bar",
-    "purity": "99.99% Pure Gold",
-    "USD": "USD",
-    "HKD": "HKD",
-    "CNY": "CNY",
-    "buy": "Buy",
-    "sell": "Sell",
-    "priceReference": "* Price for reference only"
+  "spot": {
+    "title": "Gold reference price",
+    "subtitle": "London spot, converted",
+    "unit": "per kilogram",
+    "asOf": "As of",
+    "disclaimer": "Indicative reference only, derived from the London spot price. It is not a dealable quote and does not include our dealing spread. Contact us for a firm price.",
+    "unavailable": "Reference price temporarily unavailable.",
+    "loading": "Loading reference price"
   },
-  "whyChooseUs": {
-    "title": "Why Choose Us",
-    "competitivePrices": {
-      "title": "Professional Products and Services",
-      "description": "Gold bars from renowned refineries like Heraeus and Metalor. We offer customized solutions and preferential pricing for mainland clients."
-    },
-    "secureTransactions": {
-      "title": "Security and Convenience",
-      "description": "Professional vault services and quick transactions. Our Hong Kong location ensures flexible physical delivery options for clients."
-    },
-    "exceptionalService": {
-      "title": "Focus on Mainland Market",
-      "description": "Dedicated to mainland insurance clients. We provide expert investment advice while ensuring regulatory compliance."
-    },
-    "internationalReach": {
-      "title": "Experience and Reputation",
-      "description": "Trusted expertise in gold trading, backed by Hong Kong's financial center status and excellent service track record."
+  "product": {
+    "eyebrow": "The bar",
+    "title": "One kilogram. Four nines.",
+    "body": "The 1kg cast bar is the workhorse of physical gold — large enough that the premium over spot stays thin, small enough to move, store, and sell without breaking the position apart.",
+    "specs": {
+      "weightLabel": "Weight",
+      "weightValue": "1,000 g",
+      "finenessLabel": "Fineness",
+      "finenessValue": "999.9",
+      "refinersLabel": "Refiners",
+      "refinersValue": "Heraeus · Metalor",
+      "serialLabel": "Serial",
+      "serialValue": "Individually numbered"
     }
   },
-  "testimonials": {
-    "title": "Customer Testimonials",
-    "roles": {
-      "investor": "Investor",
-      "financialAdvisor": "Financial Advisor",
-      "internationalTrader": "International Trader"
-    },
-    "reviews": {
-      "jamesAnderson": "Global Partner & Resources Limited has been my go-to for gold trading. Their prices are unbeatable and the service is top-notch.",
-      "meganMartin": "I've been recommending Global Partner & Resources Limited to my clients for years. Their security measures are second to none.",
-      "jacobYoung": "The multi-currency support and global reach of GPR have made my international gold trading seamless. Their expertise is unmatched."
-    }
+  "pillars": {
+    "title": "How we work",
+    "items": [
+      {
+        "title": "Bars from refineries you can name",
+        "body": "Heraeus and Metalor — refiners whose bars are recognised and resold without argument. A bar nobody has heard of is a discount waiting to happen."
+      },
+      {
+        "title": "Settled and vaulted in Hong Kong",
+        "body": "Hong Kong's standing as a financial centre is the reason we are here. Vault storage or physical collection, arranged either way."
+      },
+      {
+        "title": "Built for mainland clients",
+        "body": "Most of our clients come from the mainland. We know the questions that get asked, and we answer them before you have to ask."
+      },
+      {
+        "title": "Spot orders, quick settlement",
+        "body": "Agree the price, settle, take delivery. No queue, and no product you did not ask for."
+      }
+    ]
   },
-  "learn": {
-    "title": "Learn About Gold Trading",
-    "basics": {
-      "title": "Gold Trading Basics",
-      "description": "Learn the fundamentals of gold trading and investment."
-    },
-    "market": {
-      "title": "Market Analysis",
-      "description": "Stay updated with our expert analysis of the gold market."
-    },
-    "strategies": {
-      "title": "Investment Strategies",
-      "description": "Discover effective strategies for gold investment."
-    },
-    "readMore": "Read More"
+  "cta": {
+    "title": "Talk to us about a purchase.",
+    "body": "Tell us the size you are considering and we will come back with a firm price and settlement options.",
+    "button": "Contact us"
   },
   "about": {
-    "title": "About Global Partner & Resources Limited",
-    "subtitle": "Your trusted partner in gold bar trading since 2005. Learn about our history, values, and commitment to excellence.",
-    "history": {
-      "title": "Our History",
-      "content": "Founded in 2005, Global Partner & Resources Limited has grown from a small local trader to a leading international gold trading company. Our journey is marked by a commitment to integrity, innovation, and customer satisfaction."
-    },
-    "mission": {
-      "title": "Our Mission",
-      "content": "To provide our clients with unparalleled access to the global gold market, offering competitive prices, secure transactions, and exceptional service. We aim to be the go-to partner for all gold trading needs."
-    },
-    "values": {
-      "title": "Our Values",
-      "integrity": {
-        "title": "Integrity",
-        "content": "We uphold the highest standards of honesty and ethical conduct in all our dealings."
+    "eyebrow": "About",
+    "title": "A Hong Kong bullion dealer.",
+    "lead": "Global Partner & Resources Limited trades physical gold from Hong Kong, supplying investment-grade bars to private clients in Hong Kong and mainland China.",
+    "sections": [
+      {
+        "title": "What we do",
+        "body": "We buy and sell physical investment gold — principally the 1kg cast bar at 999.9 fineness, sourced from Heraeus and Metalor. We are a dealer, not a fund and not a platform. There is no account to open, no unit to redeem, and no counterparty standing between you and the metal. You buy a bar; you own that bar."
       },
-      "excellence": {
-        "title": "Excellence",
-        "content": "We strive for excellence in every aspect of our business, from customer service to product quality."
+      {
+        "title": "Why Hong Kong",
+        "body": "Hong Kong levies no sales tax on investment gold, has deep banking infrastructure, and runs a settled legal system — which is why it remains the natural place in Asia to hold physical metal. Our office and vaulting arrangements are here, in Hung Hom, Kowloon."
       },
-      "innovation": {
-        "title": "Innovation",
-        "content": "We continuously seek innovative solutions to meet the evolving needs of our clients and the market."
+      {
+        "title": "How we price",
+        "body": "Our price is the London spot price plus a dealing spread that depends on size. We tell you the spread before you commit. We would rather quote a number you can check against a public benchmark than a number you have to take on faith."
       }
-    },
-    "footer": {
-      "copyright": "© 2024 Global Partner & Resources Limited. All rights reserved.",
-      "terms": "Terms of Service",
-      "privacy": "Privacy"
-    }
+    ]
   },
   "contact": {
-    "title": "Contact Us",
-    "subtitle": "Secure Your Exclusive Wealth Protection",
-    "benefits": {
-      "consultation": "Free Consultation: Get latest market insights and investment solutions.",
-      "exclusive": "Exclusive Offer: Special pricing for first-time purchases.",
-      "convenient": "Convenient Process: Spot orders and quick delivery to save your time."
-    },
+    "eyebrow": "Contact",
+    "title": "Request a price.",
+    "lead": "Tell us the quantity you are considering and we will respond with a firm quote, settlement options, and vaulting or delivery arrangements.",
     "info": {
-      "title": "Contact Information",
-      "description": "Reach out to us through any of these channels",
-      "phone": "+852 5617 8624 ",
-      "wechatwhatsapp": "WeChat/WhatsApp: +852 5617 8624",
-      "address": "Unit 906, 18 Sung On Street, Hung Hom, Kowloon, Hong Kong"
+      "title": "Direct",
+      "emailLabel": "Email",
+      "phoneLabel": "Telephone",
+      "messagingLabel": "WeChat / WhatsApp",
+      "addressLabel": "Office",
+      "hoursLabel": "Hours",
+      "hoursValue": "Monday to Friday, 09:30–18:00 HKT"
     },
     "form": {
-      "title": "Send us a Message",
-      "description": "We'll get back to you as soon as possible",
-      "name": "Your Name",
-      "email": "Your Email",
-      "message": "Your Message",
-      "submit": "Send Message",
-      "success": "Message sent successfully!",
-      "error": "Failed to send message. Please try again."
+      "title": "Send a message",
+      "name": "Your name",
+      "email": "Your email",
+      "message": "How much are you looking to buy, and when?",
+      "submit": "Send message",
+      "sending": "Sending",
+      "success": "Message sent. We will reply to your email shortly.",
+      "error": "Message could not be sent. Please email us directly at",
+      "consent": "By sending this message you agree to our",
+      "consentSuffix": "."
+    }
+  },
+  "footer": {
+    "blurb": "Physical gold bullion, dealt and settled in Hong Kong.",
+    "navTitle": "Site",
+    "contactTitle": "Contact",
+    "legalTitle": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "rights": "All rights reserved.",
+    "disclaimer": "The price of gold can fall as well as rise. Nothing on this site is investment advice or an offer to sell. Prices shown are indicative references, not dealable quotes."
+  },
+  "legal": {
+    "updated": "Last updated",
+    "backHome": "Back to home",
+    "privacy": {
+      "title": "Privacy Policy",
+      "sections": [
+        {
+          "title": "What we collect",
+          "body": "If you send us a message through this site, we receive the name, email address and message you type into the form. That is all. We do not use advertising trackers, we do not run analytics that profile you across other sites, and we do not set cookies for marketing."
+        },
+        {
+          "title": "What we do with it",
+          "body": "We use your details for one purpose: to answer you. Enquiries are delivered to our own mailbox. They are not sold, rented, or shared with third parties for their own marketing."
+        },
+        {
+          "title": "Who else sees it",
+          "body": "Our contact form is delivered by Resend, an email delivery provider, and this site is hosted by Vercel. Both process data on our behalf in order to run the site, and neither is permitted to use your enquiry for their own purposes."
+        },
+        {
+          "title": "How long we keep it",
+          "body": "We keep enquiry correspondence for as long as we have a business relationship with you, and afterwards only for as long as Hong Kong record-keeping obligations require."
+        },
+        {
+          "title": "Your rights",
+          "body": "You may ask us what personal data we hold about you, ask us to correct it, or ask us to delete it. Write to the email address on our contact page and we will respond."
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms of Use",
+      "sections": [
+        {
+          "title": "This site is information, not an offer",
+          "body": "Nothing on this website constitutes an offer to sell, or a solicitation of an offer to buy, gold or any other asset. A binding transaction exists only once terms are agreed directly with us in writing."
+        },
+        {
+          "title": "Prices are indicative",
+          "body": "The reference price shown on this site is derived from the London spot price through a third-party data provider. It is indicative, it may be delayed, and it does not include our dealing spread. It is not a quote and cannot be traded on. Firm prices are given directly, on request, and are valid only for the period stated when quoted."
+        },
+        {
+          "title": "Not investment advice",
+          "body": "We are a bullion dealer. We do not provide investment, tax, or legal advice, and nothing on this site should be read as a recommendation to buy or sell. The price of gold can fall as well as rise, and you may get back less than you paid. If you are unsure whether physical gold suits your circumstances, take independent advice."
+        },
+        {
+          "title": "Accuracy",
+          "body": "We take care that the information here is correct, but we do not warrant that it is complete, current, or error-free, and we are not liable for loss arising from reliance on it."
+        },
+        {
+          "title": "Governing law",
+          "body": "These terms are governed by the laws of the Hong Kong Special Administrative Region, and the Hong Kong courts have exclusive jurisdiction."
+        }
+      ]
     }
   }
 }

@@ -2,26 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    @apply bg-ink text-text antialiased;
+    /* Two faint gold washes, top-left and far-right — the "one lamp on a dark desk"
+       lighting from BRAND.md, done in CSS so it costs nothing. */
+    background-image:
+      radial-gradient(
+        60rem 40rem at 8% -10%,
+        rgba(200, 164, 77, 0.07),
+        transparent 60%
+      ),
+      radial-gradient(
+        50rem 40rem at 100% 0%,
+        rgba(200, 164, 77, 0.04),
+        transparent 55%
+      );
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-gold/25 text-text;
+  }
+
+  /* Prices must not jitter as digits tick over — and Cormorant defaults to old-style
+     figures, which make a price hop above and below the baseline. Force lining,
+     tabular numerals wherever a number is shown. */
+  .tabular {
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "tnum", "lnum";
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* A hairline gold rule — the site's main structural device. */
+  .rule-gold {
+    @apply h-px w-full bg-gradient-to-r from-gold-deep/50 via-gold/25 to-transparent;
+  }
+
+  .eyebrow {
+    @apply text-[0.7rem] font-medium uppercase tracking-widest text-gold;
+  }
+
+  /* Dark-surface input chrome, per the brand rules: derived from the gold accent,
+     never a pale fill, focus halo rather than an offset ring. */
+  .field {
+    @apply w-full rounded-sm border border-gold/15 bg-surface-2 px-4 py-3.5 text-[0.95rem]
+           text-text placeholder:text-muted transition-colors
+           hover:border-gold/25
+           focus:border-gold focus:outline-none;
+  }
+
+  .field:focus {
+    box-shadow: 0 0 0 3px rgba(200, 164, 77, 0.15);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm bg-gold px-6 py-3.5
+           text-[0.8rem] font-semibold uppercase tracking-widest text-ink
+           transition-all hover:-translate-y-px hover:bg-gold-bright
+           disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-gold/30
+           px-6 py-3.5 text-[0.8rem] font-semibold uppercase tracking-widest text-gold
+           transition-colors hover:border-gold hover:bg-gold/10 hover:text-gold-bright;
+  }
+
+  /* No underline, resting or hover — colour shift only. */
+  .link {
+    @apply text-muted transition-colors hover:text-gold-bright;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

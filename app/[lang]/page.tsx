@@ -1,443 +1,152 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card";
-import { DollarSign, Globe, Lock, User, Star } from "lucide-react";
-import { GoldPrices } from "@/components/GoldPrices";
 import { getDictionary } from "../lib/dictionary";
+import { getSpotPrices } from "../lib/spot";
+import { SpotPanel } from "../components/spot-panel";
+import { isLocale } from "../lib/site";
+import { notFound } from "next/navigation";
 
 export default async function HomePage({
-  params: { lang },
+  params,
 }: {
   params: { lang: string };
 }) {
-  const dict = await getDictionary(lang);
+  if (!isLocale(params.lang)) notFound();
+  const lang = params.lang;
+  const [dict, prices] = await Promise.all([
+    getDictionary(lang),
+    getSpotPrices(),
+  ]);
+
+  const specs = [
+    { label: dict.product.specs.weightLabel, value: dict.product.specs.weightValue },
+    { label: dict.product.specs.finenessLabel, value: dict.product.specs.finenessValue },
+    { label: dict.product.specs.refinersLabel, value: dict.product.specs.refinersValue },
+    { label: dict.product.specs.serialLabel, value: dict.product.specs.serialValue },
+  ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100">
-      <header className="px-4 lg:px-6 h-14 flex items-center border-b border-indigo-200">
-        <Link className="flex items-center justify-center" href="#"></Link>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link
-            className="text-sm font-medium text-black hover:text-indigo-600 transition-colors"
-            href={`/${lang}`}
-          >
-            {dict.navigation.home}
-          </Link>
-          <Link
-            className="text-sm font-medium text-black hover:text-indigo-600 transition-colors"
-            href={`/${lang}/about`} // Changed from "/about" to "/${lang}/about"
-          >
-            {dict.navigation.about}
-          </Link>
-          <Link
-            className="text-sm font-medium text-black hover:text-indigo-600 transition-colors"
-            href="#products"
-          >
-            {dict.navigation.products}
-          </Link>
-          <Link
-            className="text-sm font-medium text-black hover:text-indigo-600 transition-colors"
-            href="#faqs"
-          >
-            {dict.navigation.faqs}
-          </Link>
-          <Link
-            className="text-sm font-medium text-black hover:text-indigo-600 transition-colors"
-            href={`/${lang}/contact`} // Use the lang parameter from your page props
-          >
-            {dict.navigation.contact}
-          </Link>
-        </nav>
-      </header>
-      <main className="flex-1">
-        <div className="w-full py-12 md:py-24 lg:py-32 bg-indigo-900 text-white">
-          <div className="container px-4 md:px-6 flex flex-col md:flex-row items-center justify-between">
-            <div className="md:w-1/2 mb-8 md:mb-0">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  {dict.hero.title}
-                </h1>
-                <p className="mx-auto max-w-[700px] text-indigo-200 md:text-xl">
-                  {dict.hero.subtitle}
-                </p>
-              </div>
-              <div className="space-x-4 mt-6">
-                <Button className="bg-indigo-600 text-white hover:bg-indigo-700">
-                  {dict.hero.viewProducts}
-                </Button>
-                <Button
-                  variant="outline"
-                  className="bg-white text-indigo-900 border-white hover:bg-indigo-100 hover:text-indigo-900"
-                >
-                  {dict.hero.learnMore}
-                </Button>
-              </div>
+    <>
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="mx-auto grid max-w-page items-center gap-12 px-6 py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:py-28">
+          <div>
+            <p className="eyebrow">{dict.hero.eyebrow}</p>
+            <h1 className="mt-6 text-balance font-display text-5xl font-bold leading-[1.08] tracking-tight sm:text-6xl">
+              {dict.hero.titleTop}
+              <br />
+              <span className="text-gold">{dict.hero.titleBottom}</span>
+            </h1>
+            <p className="mt-8 max-w-xl text-base leading-relaxed text-muted">
+              {dict.hero.body}
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Link href={`/${lang}/contact`} className="btn-primary">
+                {dict.hero.primary}
+              </Link>
+              <Link href={`/${lang}#how`} className="btn-ghost">
+                {dict.hero.secondary}
+              </Link>
             </div>
-            <div className="md:w-1/2 flex justify-end">
+          </div>
+
+          <div className="relative">
+            <div className="overflow-hidden rounded-sm border border-gold/15">
               <Image
-                src="/images/gold-bars.jpg"
-                alt="Gold bars stacked neatly, representing the high-quality products offered by Global Partner & Resources Limited"
-                width={800} // Changed to match actual width
-                height={323} // Changed to match actual height
-                className="rounded-lg shadow-lg w-full h-auto object-cover max-w-[800px]"
+                src="/img/hero-bullion.webp"
+                alt=""
+                width={1376}
+                height={768}
                 priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="h-auto w-full"
               />
             </div>
           </div>
         </div>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-indigo-50">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8 text-indigo-900">
-              {dict.products.title}
-            </h2>
-            <div>
-              <Tabs defaultValue="usd" className="w-full max-w-3xl mx-auto">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger
-                    value="usd"
-                    className="text-black data-[state=active]:bg-white data-[state=active]:text-black hover:bg-indigo-50"
-                  >
-                    {dict.products.USD}
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="hkd"
-                    className="text-black data-[state=active]:bg-white data-[state=active]:text-black hover:bg-indigo-50"
-                  >
-                    {dict.products.HKD}
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="cny"
-                    className="text-black data-[state=active]:bg-white data-[state=active]:text-black hover:bg-indigo-50"
-                  >
-                    {dict.products.CNY}
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="usd">
-                  <Card>
-                    <CardHeader className="flex flex-col md:flex-row justify-between items-start">
-                      <div className="mb-4 md:mb-0 md:mr-4">
-                        <CardTitle className="text-black">
-                          {dict.products.goldBar}
-                        </CardTitle>
-                        <CardDescription className="text-gray-600">
-                          {dict.products.purity}
-                        </CardDescription>
-                        <CardContent className="p-0 mt-4 text-black">
-                          <GoldPrices currency="USD" />
-                        </CardContent>
-                      </div>
-                      <div className="w-full md:w-auto">
-                        <Image
-                          src="/images/gold-bars2.jpg"
-                          alt="Gold bars stacked neatly, representing the high-quality products offered by Global Partner & Resources Limited"
-                          width={300}
-                          height={150}
-                          className="rounded-lg shadow-lg w-full h-auto"
-                          priority
-                        />
-                      </div>
-                    </CardHeader>
-                  </Card>
-                </TabsContent>
+      </section>
 
-                <TabsContent value="hkd">
-                  <Card>
-                    <CardHeader className="flex flex-col md:flex-row justify-between items-start">
-                      <div className="mb-4 md:mb-0 md:mr-4">
-                        <CardTitle className="text-black">
-                          {dict.products.goldBar}
-                        </CardTitle>
-                        <CardDescription className="text-gray-600">
-                          {dict.products.purity}
-                        </CardDescription>
-                        <CardContent className="p-0 mt-4 text-black">
-                          <GoldPrices currency="HKD" />
-                        </CardContent>
-                      </div>
-                      <div className="w-full md:w-auto">
-                        <Image
-                          src="/images/gold-bars2.jpg"
-                          alt="Gold bars stacked neatly, representing the high-quality products offered by Global Partner & Resources Limited"
-                          width={300}
-                          height={150}
-                          className="rounded-lg shadow-lg w-full h-auto"
-                          priority
-                        />
-                      </div>
-                    </CardHeader>
-                  </Card>
-                </TabsContent>
+      {/* Reference price */}
+      <section id="bullion" className="scroll-mt-24">
+        <div className="mx-auto max-w-page px-6 py-8">
+          <SpotPanel prices={prices} dict={dict} lang={lang} />
+        </div>
+      </section>
 
-                <TabsContent value="cny">
-                  <Card>
-                    <CardHeader className="flex flex-col md:flex-row justify-between items-start">
-                      <div className="mb-4 md:mb-0 md:mr-4">
-                        <CardTitle className="text-black">
-                          {dict.products.goldBar}
-                        </CardTitle>
-                        <CardDescription className="text-gray-600">
-                          {dict.products.purity}
-                        </CardDescription>
-                        <CardContent className="p-0 mt-4 text-black">
-                          <GoldPrices currency="CNY" />
-                        </CardContent>
-                      </div>
-                      <div className="w-full md:w-auto relative">
-                        <Image
-                          src="/images/gold-bars2.jpg"
-                          alt="Gold bars stacked neatly, representing the high-quality products offered by Global Partner & Resources Limited"
-                          width={300}
-                          height={150}
-                          className="rounded-lg shadow-lg w-full h-auto"
-                          priority
-                        />
-                      </div>
-                    </CardHeader>
-                  </Card>
-                </TabsContent>
-              </Tabs>
-              <div>
-                {" "}
-                <p className="text-sm text-gray-500 mt-2 text-center">
-                  {dict.products.priceReference}
-                </p>
-              </div>
-              <div className="mt-8 flex justify-center space-x-4">
-                <Link href={`/${lang}/contact?type=buy`}>
-                  <Button className="bg-indigo-600 text-white hover:bg-indigo-700">
-                    Buy
-                  </Button>
-                </Link>
-                <Link href={`/${lang}/contact?type=sell`}>
-                  <Button
-                    variant="outline"
-                    className="bg-red-500 text-white hover:bg-red-600"
-                  >
-                    Sell
-                  </Button>
-                </Link>
-              </div>
-            </div>
+      {/* The bar */}
+      <section className="mx-auto max-w-page px-6 py-20 lg:py-28">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="relative min-h-[20rem] overflow-hidden rounded-sm border border-gold/15">
+            <Image
+              src="/img/bullion-1kg.webp"
+              alt=""
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
           </div>
-        </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8 text-indigo-900">
-              {dict.whyChooseUs.title}
+
+          <div className="flex flex-col justify-center">
+            <p className="eyebrow">{dict.product.eyebrow}</p>
+            <h2 className="mt-5 font-display text-4xl font-bold leading-tight sm:text-5xl">
+              {dict.product.title}
             </h2>
-            <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
-              <div className="flex flex-col items-center space-y-2 border-indigo-200 p-4 rounded-lg">
-                <DollarSign className="h-8 w-8 text-indigo-600" />
-                <h3 className="text-xl font-bold text-indigo-900 text-center min-h-[3rem] flex items-center">
-                  {dict.whyChooseUs.competitivePrices.title}
-                </h3>
-                <p className="text-sm text-indigo-600 text-center whitespace-pre-line">
-                  {dict.whyChooseUs.competitivePrices.description}
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-2 border-indigo-200 p-4 rounded-lg">
-                <Lock className="h-8 w-8 text-indigo-600" />
-                <h3 className="text-xl font-bold text-indigo-900 text-center min-h-[3rem] flex items-center">
-                  {dict.whyChooseUs.secureTransactions.title}
-                </h3>
-                <p className="text-sm text-indigo-600 text-center whitespace-pre-line">
-                  {dict.whyChooseUs.secureTransactions.description}
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-2 border-indigo-200 p-4 rounded-lg">
-                <User className="h-8 w-8 text-indigo-600" />
-                <h3 className="text-xl font-bold text-indigo-900 text-center min-h-[3rem] flex items-center">
-                  {dict.whyChooseUs.exceptionalService.title}
-                </h3>
-                <p className="text-sm text-indigo-600 text-center whitespace-pre-line">
-                  {dict.whyChooseUs.exceptionalService.description}
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-2 border-indigo-200 p-4 rounded-lg">
-                <Globe className="h-8 w-8 text-indigo-600" />
-                <h3 className="text-xl font-bold text-indigo-900 text-center min-h-[3rem] flex items-center">
-                  {dict.whyChooseUs.internationalReach.title}
-                </h3>
-                <p className="text-sm text-indigo-600 text-center whitespace-pre-line">
-                  {dict.whyChooseUs.internationalReach.description}
-                </p>
-              </div>
-            </div>
+            <p className="mt-6 leading-relaxed text-muted">{dict.product.body}</p>
+
+            <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-sm border border-subtle/50 bg-subtle/50">
+              {specs.map((spec) => (
+                <div key={spec.label} className="bg-surface px-5 py-4">
+                  <dt className="text-[0.68rem] uppercase tracking-widest text-muted">
+                    {spec.label}
+                  </dt>
+                  <dd className="tabular mt-1.5 font-display text-lg font-bold text-text">
+                    {spec.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
-        </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-indigo-50">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8 text-indigo-900">
-              {dict.testimonials.title}
-            </h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-black">James Anderson</CardTitle>
-                  <CardDescription className="text-black">
-                    {dict.testimonials.roles.investor}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-indigo-600">
-                    "{dict.testimonials.reviews.jamesAnderson}"
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <div className="flex items-center">
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                  </div>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-black">Megan Martin</CardTitle>
-                  <CardDescription className="text-black">
-                    {dict.testimonials.roles.financialAdvisor}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-indigo-600">
-                    "{dict.testimonials.reviews.meganMartin}"
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <div className="flex items-center">
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                  </div>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-black">Jacob Young</CardTitle>
-                  <CardDescription className="text-black">
-                    {dict.testimonials.roles.internationalTrader}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-indigo-600">
-                    "{dict.testimonials.reviews.jacobYoung}"
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <div className="flex items-center">
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                    <Star className="w-4 h-4 fill-current text-yellow-500" />
-                  </div>
-                </CardFooter>
-              </Card>
-            </div>
+        </div>
+      </section>
+
+      {/* How we work */}
+      <section id="how" className="scroll-mt-24 border-y border-gold/10 bg-surface/30">
+        <div className="mx-auto max-w-page px-6 py-20 lg:py-28">
+          <h2 className="font-display text-4xl font-bold sm:text-5xl">
+            {dict.pillars.title}
+          </h2>
+          <div className="rule-gold mt-8" />
+
+          <div className="mt-12 grid gap-x-12 gap-y-12 md:grid-cols-2">
+            {dict.pillars.items.map((item, i) => (
+              <div key={item.title} className="flex gap-6">
+                <span className="tabular shrink-0 font-display text-2xl font-bold text-gold-deep">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 className="font-display text-2xl font-bold leading-snug">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 leading-relaxed text-muted">{item.body}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8 text-indigo-900">
-              {dict.learn.title}
-            </h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-black">
-                    {dict.learn.basics.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-indigo-600">
-                    {dict.learn.basics.description}
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    variant="outline"
-                    className="bg-white text-indigo-600 border-indigo-600 hover:bg-indigo-50"
-                  >
-                    {dict.learn.readMore}
-                  </Button>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-black">
-                    {dict.learn.market.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-indigo-600">
-                    {dict.learn.market.description}
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    variant="outline"
-                    className="bg-white text-indigo-600 border-indigo-600 hover:bg-indigo-50"
-                  >
-                    {dict.learn.readMore}
-                  </Button>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-black">
-                    {dict.learn.strategies.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-indigo-600">
-                    {dict.learn.strategies.description}
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    variant="outline"
-                    className="bg-white text-indigo-600 border-indigo-600 hover:bg-indigo-50"
-                  >
-                    {dict.learn.readMore}
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </div>
-        </section>
-      </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-indigo-200">
-        <p className="text-xs text-indigo-600">
-          © 2024 Global Partner & Resources Limited. All rights reserved.
+        </div>
+      </section>
+
+      {/* Closing CTA */}
+      <section className="mx-auto max-w-page px-6 py-24 text-center lg:py-32">
+        <h2 className="mx-auto max-w-2xl font-display text-4xl font-bold leading-tight sm:text-5xl">
+          {dict.cta.title}
+        </h2>
+        <p className="mx-auto mt-6 max-w-xl leading-relaxed text-muted">
+          {dict.cta.body}
         </p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link
-            className="text-xs hover:underline underline-offset-4 text-indigo-600"
-            href="#"
-          >
-            Terms of Service
-          </Link>
-          <Link
-            className="text-xs hover:underline underline-offset-4 text-indigo-600"
-            href="#"
-          >
-            Privacy
-          </Link>
-        </nav>
-      </footer>
-    </div>
+        <Link href={`/${lang}/contact`} className="btn-primary mt-10">
+          {dict.cta.button}
+        </Link>
+      </section>
+    </>
   );
 }

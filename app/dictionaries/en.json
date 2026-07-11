@@ -110,18 +110,8 @@
       "hoursLabel": "Hours",
       "hoursValue": "Monday to Friday, 09:30–18:00 HKT"
     },
-    "form": {
-      "title": "Send a message",
-      "name": "Your name",
-      "email": "Your email",
-      "message": "How much are you looking to buy, and when?",
-      "submit": "Send message",
-      "sending": "Sending",
-      "success": "Message sent. We will reply to your email shortly.",
-      "error": "Message could not be sent. Please email us directly at",
-      "consent": "By sending this message you agree to our",
-      "consentSuffix": "."
-    }
+    "emailBody": "Tell us the quantity you are considering and roughly when. We will reply with a firm price, settlement options, and vaulting or delivery arrangements.",
+    "emailCta": "Email us"
   },
   "footer": {
     "blurb": "Physical gold bullion, dealt and settled in Hong Kong.",
@@ -140,20 +130,20 @@
       "title": "Privacy Policy",
       "sections": [
         {
-          "title": "What we collect",
-          "body": "If you send us a message through this site, we receive the name, email address and message you type into the form. That is all. We do not use advertising trackers, we do not run analytics that profile you across other sites, and we do not set cookies for marketing."
+          "title": "This site collects nothing",
+          "body": "There is no contact form, no sign-up, no analytics that profiles you, no advertising trackers and no marketing cookies. Reading these pages leaves us with no record of you."
         },
         {
-          "title": "What we do with it",
-          "body": "We use your details for one purpose: to answer you. Enquiries are delivered to our own mailbox. They are not sold, rented, or shared with third parties for their own marketing."
+          "title": "If you write to us",
+          "body": "When you email, call, or message us, we hold your details for one purpose: to answer you and to conduct any business that follows. We do not sell, rent, or share your details with third parties for their own marketing."
         },
         {
-          "title": "Who else sees it",
-          "body": "Our contact form is delivered by Resend, an email delivery provider, and this site is hosted by Vercel. Both process data on our behalf in order to run the site, and neither is permitted to use your enquiry for their own purposes."
+          "title": "Who else is involved",
+          "body": "This website is hosted by Vercel, which keeps standard server request logs on our behalf in order to serve the pages and defend against abuse. The gold reference price is fetched by our own server from a market data provider — your browser never contacts them, and nothing about you is sent to them."
         },
         {
           "title": "How long we keep it",
-          "body": "We keep enquiry correspondence for as long as we have a business relationship with you, and afterwards only for as long as Hong Kong record-keeping obligations require."
+          "body": "We keep correspondence for as long as we have a business relationship with you, and afterwards only for as long as Hong Kong record-keeping obligations require."
         },
         {
           "title": "Your rights",

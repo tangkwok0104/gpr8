@@ -1,29 +1,31 @@
 /**
- * The GPR mark: a gold ingot in trimetric projection, reduced to three faces.
- * Hand-rolled SVG — the previous site's logo was a PNG that was never committed and
- * still 500s in production.
+ * The GPR mark — "The Stack": three cast bars abstracted into bands.
+ *
+ * It reads three ways on purpose: as stacked bullion, as a rising chart, and as an
+ * equals sign — which is what a two-way (bid/ask) price is. Geometric rather than
+ * illustrative, so it survives a 16px browser tab, embroidery, and a rubber stamp.
+ *
+ * Vector, not raster. The previous logo was a background-removed PNG that was never
+ * committed to the repo and still 500s in production — a raster logo is a logo waiting
+ * to go blurry or go missing.
  */
 export function Mark({ className = "h-8 w-8" }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      {/* top face — the only face that carries a marking, as on a real cast bar */}
-      <path d="M9 9.5 L23 9.5 L26 13 L6 13 Z" fill="#D4B063" />
-      {/* front face */}
-      <path d="M6 13 L26 13 L24 23 L8 23 Z" fill="#A8813C" />
-      {/* shadowed right bevel */}
-      <path d="M26 13 L24 23 L20.5 23 L22.5 13 Z" fill="#6E5423" />
-      {/* struck line on the top face, standing in for the assay mark */}
-      <path
-        d="M12 11.2 H20"
-        stroke="#6E5423"
-        strokeOpacity="0.5"
-        strokeWidth="1"
-      />
+    <svg viewBox="0 0 32 32" fill="none" className={className} aria-hidden="true">
+      <rect x="7" y="8" width="18" height="4.6" rx="1" fill="#D4B063" />
+      <rect x="5" y="14" width="22" height="4.6" rx="1" fill="#A8813C" />
+      <rect x="9" y="20" width="14" height="4.6" rx="1" fill="#6E5423" />
+    </svg>
+  );
+}
+
+/** Reversed for dark surfaces — brighter golds so the stack doesn't sink into the ink. */
+export function MarkReversed({ className = "h-8 w-8" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" className={className} aria-hidden="true">
+      <rect x="7" y="8" width="18" height="4.6" rx="1" fill="#E8CE7E" />
+      <rect x="5" y="14" width="22" height="4.6" rx="1" fill="#C8A44D" />
+      <rect x="9" y="20" width="14" height="4.6" rx="1" fill="#8A6D2B" />
     </svg>
   );
 }

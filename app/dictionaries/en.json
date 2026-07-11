@@ -23,13 +23,19 @@
     "secondary": "How we work"
   },
   "spot": {
-    "title": "Gold reference price",
-    "subtitle": "London spot, converted",
+    "title": "Reference prices",
+    "subtitle": "London spot, converted, per kilogram",
     "unit": "per kilogram",
+    "bidLabel": "We buy",
+    "bidNote": "Our indicative bid",
+    "askLabel": "We sell",
+    "askNote": "Our indicative offer",
+    "spotLabel": "Spot (mid)",
+    "spreadNote": "Indicative spread of ±1.5% either side of spot.",
     "asOf": "As of",
-    "disclaimer": "Indicative reference only, derived from the London spot price. It is not a dealable quote and does not include our dealing spread. Contact us for a firm price.",
-    "unavailable": "Reference price temporarily unavailable.",
-    "loading": "Loading reference price"
+    "disclaimer": "Reference only. These figures are derived from the London spot price and are not a dealable quote — spot moves, and the spread varies with size. The price you actually trade at is confirmed by the dealer at the time of dealing.",
+    "unavailable": "Reference prices temporarily unavailable.",
+    "loading": "Loading reference prices"
   },
   "product": {
     "eyebrow": "The bar",

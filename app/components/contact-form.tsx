@@ -42,7 +42,7 @@ export function ContactForm({ dict, lang }: { dict: Dict; lang: Locale }) {
       form.reset();
       setStatus("sent");
     } catch {
-      // Never silently swallow a failed send: the user is told, and given the email
+      // Never silently swallow a failed send: the user is told, and handed the email
       // address so their enquiry isn't lost to a dead form.
       setStatus("failed");
     }
@@ -50,15 +50,15 @@ export function ContactForm({ dict, lang }: { dict: Dict; lang: Locale }) {
 
   if (status === "sent") {
     return (
-      <p className="rounded-sm border border-positive/30 bg-positive/10 px-5 py-4 text-sm leading-relaxed text-text">
+      <p className="rounded-sm border border-positive/30 bg-positive/5 px-5 py-4 text-sm leading-relaxed text-ink">
         {f.success}
       </p>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5" noValidate={false}>
-      {/* Honeypot: invisible to humans, irresistible to bots. Server drops any
+    <form onSubmit={handleSubmit} className="space-y-5">
+      {/* Honeypot: invisible to humans, irresistible to bots. The server drops any
           submission that fills it. */}
       <div className="absolute left-[-9999px]" aria-hidden="true">
         <label htmlFor="company_website">Do not fill this in</label>
@@ -119,11 +119,11 @@ export function ContactForm({ dict, lang }: { dict: Dict; lang: Locale }) {
       </div>
 
       {status === "failed" && (
-        <p className="rounded-sm border border-negative/30 bg-negative/10 px-5 py-4 text-sm leading-relaxed text-text">
+        <p className="rounded-sm border border-negative/30 bg-negative/5 px-5 py-4 text-sm leading-relaxed text-ink">
           {f.error}{" "}
           <a
             href={`mailto:${SITE.email}`}
-            className="font-medium text-gold transition-colors hover:text-gold-bright"
+            className="font-medium text-gold transition-colors hover:text-gold-hover"
           >
             {SITE.email}
           </a>
@@ -138,11 +138,11 @@ export function ContactForm({ dict, lang }: { dict: Dict; lang: Locale }) {
         {status === "sending" ? f.sending : f.submit}
       </button>
 
-      <p className="text-xs leading-relaxed text-muted/70">
+      <p className="text-xs leading-relaxed text-muted">
         {f.consent}{" "}
         <Link
           href={`/${lang}/privacy`}
-          className="text-muted underline-offset-2 transition-colors hover:text-gold-bright"
+          className="text-gold transition-colors hover:text-gold-hover"
         >
           {dict.footer.privacy}
         </Link>

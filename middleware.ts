@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-
-const LOCALES = ["en", "zh"] as const;
-const DEFAULT_LOCALE = "en";
+import { LOCALES, DEFAULT_LOCALE, type Locale } from "./app/lib/site";
 
 /**
- * Hong Kong and mainland visitors land on Chinese; everyone else on English.
- * Traditional characters throughout — this is a Hong Kong company.
+ * Traditional Chinese is the default. Only a visitor whose browser asks for Simplified
+ * (zh-CN / zh-Hans / zh-SG) or plain English gets moved off it.
  */
-function preferredLocale(req: NextRequest): string {
+function preferredLocale(req: NextRequest): Locale {
   const header = req.headers.get("accept-language")?.toLowerCase() ?? "";
-  if (header.includes("zh")) return "zh";
+
+  if (/zh-(cn|sg|hans)|zh-hans/.test(header)) return "zh-hans";
+  if (/\bzh\b|zh-(hk|tw|mo|hant)/.test(header)) return "zh-hant";
+  if (header.includes("en")) return "en";
+
   return DEFAULT_LOCALE;
 }
 

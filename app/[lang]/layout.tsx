@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getDictionary } from "../lib/dictionary";
 import { SiteHeader } from "../components/site-header";
 import { SiteFooter } from "../components/site-footer";
-import { LOCALES, isLocale, SITE } from "../lib/site";
+import { LOCALES, HTML_LANG, isLocale, SITE } from "../lib/site";
 
 export function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
@@ -22,14 +22,19 @@ export async function generateMetadata({
     description: dict.meta.description,
     alternates: {
       canonical: `${SITE.url}/${params.lang}`,
-      languages: { en: `${SITE.url}/en`, "zh-Hant": `${SITE.url}/zh` },
+      languages: {
+        "zh-Hant": `${SITE.url}/zh-hant`,
+        "zh-Hans": `${SITE.url}/zh-hans`,
+        en: `${SITE.url}/en`,
+        "x-default": `${SITE.url}/zh-hant`,
+      },
     },
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.description,
       url: `${SITE.url}/${params.lang}`,
       siteName: dict.company.name,
-      locale: params.lang === "zh" ? "zh_HK" : "en_US",
+      locale: HTML_LANG[params.lang].replace(/-/g, "_"),
       type: "website",
     },
   };
@@ -64,7 +69,7 @@ export default async function LangLayout({
   };
 
   return (
-    <div lang={lang === "zh" ? "zh-Hant-HK" : "en"} className="flex min-h-screen flex-col">
+    <div lang={HTML_LANG[lang]} className="flex min-h-screen flex-col">
       {/* JSON.stringify does not escape "</script>", so a future dictionary edit could
           otherwise break out of this tag. Escaping "<" closes that off permanently. */}
       <script

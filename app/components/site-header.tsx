@@ -17,7 +17,7 @@ export function SiteHeader({ lang, dict }: { lang: Locale; dict: Dict }) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gold/10 bg-ink/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-page items-center gap-6 px-6">
         <Link href={`/${lang}`} className="shrink-0">
           <Logo name={dict.company.name} />
@@ -28,7 +28,7 @@ export function SiteHeader({ lang, dict }: { lang: Locale; dict: Dict }) {
             <Link
               key={link.href}
               href={link.href}
-              className="text-[0.8rem] font-medium uppercase tracking-widest text-muted transition-colors hover:text-gold-bright"
+              className="text-[0.8rem] font-medium uppercase tracking-widest text-muted transition-colors hover:text-gold"
             >
               {link.label}
             </Link>

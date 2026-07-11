@@ -1,8 +1,9 @@
-const dictionaries = {
-  en: () => import('../dictionaries/en.json').then(module => module.default),
-  zh: () => import('../dictionaries/zh.json').then(module => module.default)
-}
+import type { Locale } from "./site";
 
-export const getDictionary = async (locale: string) => {
-  return dictionaries[locale as 'en' | 'zh']()
-}
+const dictionaries = {
+  "zh-hant": () => import("../dictionaries/zh-hant.json").then((m) => m.default),
+  "zh-hans": () => import("../dictionaries/zh-hans.json").then((m) => m.default),
+  en: () => import("../dictionaries/en.json").then((m) => m.default),
+};
+
+export const getDictionary = (locale: Locale) => dictionaries[locale]();

@@ -15,20 +15,19 @@ type Dict = {
     rights: string;
     disclaimer: string;
   };
-  contact: { info: { emailLabel: string; phoneLabel: string } };
 };
 
 export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dict }) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 border-t border-gold/10 bg-surface/40">
+    <footer className="mt-24 border-t border-line bg-well/50">
       <div className="mx-auto max-w-page px-6 py-16">
         <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
               <Mark className="h-7 w-7" />
-              <span className="font-display text-lg font-bold tracking-wide">
+              <span className="font-display text-lg font-bold tracking-wide text-ink">
                 GPR
               </span>
             </div>
@@ -94,11 +93,11 @@ export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dict }) {
           </div>
         </div>
 
-        <div className="mt-14 border-t border-subtle/40 pt-8">
-          <p className="max-w-3xl text-xs leading-relaxed text-muted/80">
+        <div className="mt-14 border-t border-line pt-8">
+          <p className="max-w-3xl text-xs leading-relaxed text-muted">
             {dict.footer.disclaimer}
           </p>
-          <p className="mt-4 text-xs text-muted/60">
+          <p className="mt-4 text-xs text-muted/80">
             © {year} {dict.company.name}. {dict.footer.rights}
           </p>
         </div>

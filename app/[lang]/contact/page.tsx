@@ -2,7 +2,13 @@ import { notFound } from "next/navigation";
 import { getDictionary } from "../../lib/dictionary";
 import { SITE, isLocale } from "../../lib/site";
 import { ContactForm } from "../../components/contact-form";
-import { MailIcon, PhoneIcon, ChatIcon, PinIcon, ClockIcon } from "../../components/icons";
+import {
+  MailIcon,
+  PhoneIcon,
+  ChatIcon,
+  PinIcon,
+  ClockIcon,
+} from "../../components/icons";
 
 export default async function ContactPage({
   params,
@@ -18,7 +24,7 @@ export default async function ContactPage({
     <div className="mx-auto max-w-page px-6 py-20 lg:py-28">
       <div className="max-w-3xl">
         <p className="eyebrow">{dict.contact.eyebrow}</p>
-        <h1 className="mt-6 font-display text-5xl font-bold leading-tight sm:text-6xl">
+        <h1 className="mt-6 font-display text-5xl font-bold leading-tight text-ink sm:text-6xl">
           {dict.contact.title}
         </h1>
         <p className="mt-8 text-lg leading-relaxed text-muted">
@@ -42,7 +48,7 @@ export default async function ContactPage({
                 <dd className="mt-1.5">
                   <a
                     href={`mailto:${SITE.email}`}
-                    className="break-all font-display text-xl font-bold text-text transition-colors hover:text-gold-bright"
+                    className="break-all font-display text-xl font-bold text-ink transition-colors hover:text-gold"
                   >
                     {SITE.email}
                   </a>
@@ -59,7 +65,7 @@ export default async function ContactPage({
                 <dd className="mt-1.5">
                   <a
                     href={`tel:${SITE.phoneHref}`}
-                    className="tabular font-display text-xl font-bold text-text transition-colors hover:text-gold-bright"
+                    className="tabular font-display text-xl font-bold text-ink transition-colors hover:text-gold"
                   >
                     {SITE.phone}
                   </a>
@@ -73,7 +79,7 @@ export default async function ContactPage({
                 <dt className="text-[0.68rem] uppercase tracking-widest text-muted">
                   {info.messagingLabel}
                 </dt>
-                <dd className="tabular mt-1.5 text-text">{SITE.phone}</dd>
+                <dd className="tabular mt-1.5 text-ink">{SITE.phone}</dd>
               </div>
             </div>
 
@@ -83,7 +89,7 @@ export default async function ContactPage({
                 <dt className="text-[0.68rem] uppercase tracking-widest text-muted">
                   {info.addressLabel}
                 </dt>
-                <dd className="mt-1.5 leading-relaxed text-text">
+                <dd className="mt-1.5 leading-relaxed text-ink">
                   {SITE.address[lang]}
                 </dd>
               </div>
@@ -95,14 +101,14 @@ export default async function ContactPage({
                 <dt className="text-[0.68rem] uppercase tracking-widest text-muted">
                   {info.hoursLabel}
                 </dt>
-                <dd className="mt-1.5 text-text">{info.hoursValue}</dd>
+                <dd className="mt-1.5 text-ink">{info.hoursValue}</dd>
               </div>
             </div>
           </dl>
         </div>
 
-        <div className="rounded-sm border border-gold/15 bg-surface/70 p-8 lg:p-10">
-          <h2 className="font-display text-2xl font-bold">
+        <div className="rounded-sm border border-line bg-card p-8 shadow-sm shadow-ink/[0.03] lg:p-10">
+          <h2 className="font-display text-2xl font-bold text-ink">
             {dict.contact.form.title}
           </h2>
           <div className="mt-8">

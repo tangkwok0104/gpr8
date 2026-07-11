@@ -3,27 +3,42 @@ import "server-only";
 const TROY_OUNCES_PER_KG = 32.1507466;
 const TWELVE_HOURS = 60 * 60 * 12;
 
+/**
+ * The dealing spread either side of spot: we buy at spot − 1.5%, we sell at spot + 1.5%.
+ *
+ * This drives the indicative bid/ask shown on the site. It is NOT a quote — a real
+ * price is confirmed by the dealer at the time of trade, because spot moves and the
+ * spread widens or tightens with size. The UI says so, in every language.
+ */
+export const DEALER_SPREAD = 0.015;
+
+export type CurrencyCode = "USD" | "HKD" | "CNY";
+type ByCurrency = Record<CurrencyCode, number>;
+
 export type SpotPrices = {
-  USD: number;
-  HKD: number;
-  CNY: number;
+  /** Mid — the London reference, per kilogram. */
+  spot: ByCurrency;
+  /** What we pay you, per kilogram. */
+  bid: ByCurrency;
+  /** What you pay us, per kilogram. */
+  ask: ByCurrency;
+  spreadPct: number;
   /** Unix seconds, from the data provider — not our clock. */
   timestamp: number;
 };
 
 /**
- * Gold reference price, per kilogram, in the three currencies we quote.
+ * Gold reference price per kilogram, in the three currencies we quote.
  *
- * Two things here are deliberate and were wrong before:
+ * Two things here are deliberate, and were wrong in the previous site:
  *
  * 1. The API key stays on the server. It used to sit in a client component with a
- *    hardcoded fallback, which meant it shipped in the JS bundle for anyone to read
- *    and burn — on a 100-call/month free tier.
+ *    hardcoded fallback, so it shipped in the JS bundle for anyone to read and burn —
+ *    on a 100-call/month tier.
  *
- * 2. `revalidate` makes this ONE upstream call per 12 hours for the whole site. The
- *    old code fetched per browser (cached in each visitor's localStorage), so quota
- *    burn scaled with traffic — the site got more likely to break the more people
- *    visited it.
+ * 2. `revalidate` makes this ONE upstream call per 12 hours for the whole site. The old
+ *    code fetched per browser, so quota burn scaled with traffic: the site got more
+ *    likely to break the more people visited it.
  *
  * FX comes from the same call rather than the hardcoded 7.8 / 7.12 the old component
  * used, so the HKD and CNY figures track reality.
@@ -52,7 +67,7 @@ export async function getSpotPrices(): Promise<SpotPrices | null> {
     const data = await res.json();
     const rates = data?.rates;
 
-    // XAU is quoted as troy ounces per 1 USD, so the price of an ounce is its inverse.
+    // XAU is quoted as troy ounces per 1 USD, so an ounce costs its inverse.
     const xau = Number(rates?.XAU);
     const hkd = Number(rates?.HKD);
     const cny = Number(rates?.CNY);
@@ -63,11 +78,23 @@ export async function getSpotPrices(): Promise<SpotPrices | null> {
     }
 
     const usdPerKg = (1 / xau) * TROY_OUNCES_PER_KG;
-
-    return {
+    const spot: ByCurrency = {
       USD: usdPerKg,
       HKD: usdPerKg * hkd,
       CNY: usdPerKg * cny,
+    };
+
+    const scale = (by: number): ByCurrency => ({
+      USD: spot.USD * by,
+      HKD: spot.HKD * by,
+      CNY: spot.CNY * by,
+    });
+
+    return {
+      spot,
+      bid: scale(1 - DEALER_SPREAD),
+      ask: scale(1 + DEALER_SPREAD),
+      spreadPct: DEALER_SPREAD * 100,
       timestamp: Number(data?.timestamp) || Math.floor(Date.now() / 1000),
     };
   } catch (err) {

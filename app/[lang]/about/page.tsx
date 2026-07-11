@@ -14,7 +14,7 @@ export default async function AboutPage({
     <div className="mx-auto max-w-page px-6 py-20 lg:py-28">
       <div className="max-w-3xl">
         <p className="eyebrow">{dict.about.eyebrow}</p>
-        <h1 className="mt-6 font-display text-5xl font-bold leading-tight sm:text-6xl">
+        <h1 className="mt-6 font-display text-5xl font-bold leading-tight text-ink sm:text-6xl">
           {dict.about.title}
         </h1>
         <p className="mt-8 text-lg leading-relaxed text-muted">
@@ -27,7 +27,7 @@ export default async function AboutPage({
       <div className="mt-14 grid gap-12 md:grid-cols-3">
         {dict.about.sections.map((section) => (
           <section key={section.title}>
-            <h2 className="font-display text-2xl font-bold leading-snug">
+            <h2 className="font-display text-2xl font-bold leading-snug text-ink">
               {section.title}
             </h2>
             <p className="mt-4 leading-relaxed text-muted">{section.body}</p>

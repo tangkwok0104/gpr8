@@ -26,7 +26,7 @@ export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dict }) {
         <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
-              <Mark className="h-7 w-7" />
+              <Mark className="h-8 w-8" />
               <span className="font-display text-lg font-bold tracking-wide text-ink">
                 GPR
               </span>

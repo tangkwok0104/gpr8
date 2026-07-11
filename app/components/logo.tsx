@@ -1,39 +1,47 @@
-/**
- * The GPR mark — "The Stack": three cast bars abstracted into bands.
- *
- * It reads three ways on purpose: as stacked bullion, as a rising chart, and as an
- * equals sign — which is what a two-way (bid/ask) price is. Geometric rather than
- * illustrative, so it survives a 16px browser tab, embroidery, and a rubber stamp.
- *
- * Vector, not raster. The previous logo was a background-removed PNG that was never
- * committed to the repo and still 500s in production — a raster logo is a logo waiting
- * to go blurry or go missing.
- */
-export function Mark({ className = "h-8 w-8" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 32 32" fill="none" className={className} aria-hidden="true">
-      <rect x="7" y="8" width="18" height="4.6" rx="1" fill="#D4B063" />
-      <rect x="5" y="14" width="22" height="4.6" rx="1" fill="#A8813C" />
-      <rect x="9" y="20" width="14" height="4.6" rx="1" fill="#6E5423" />
-    </svg>
-  );
-}
+/* eslint-disable @next/next/no-img-element */
 
-/** Reversed for dark surfaces — brighter golds so the stack doesn't sink into the ink. */
-export function MarkReversed({ className = "h-8 w-8" }: { className?: string }) {
+/**
+ * GPR's REAL logo — a blue globe crossed by a band of gold, copper and silver.
+ * "Global" (the sphere) and "Resources" (the three metals).
+ *
+ * This is the company's existing mark, which they have used for about a year. It is NOT
+ * ours to redesign, so it is reproduced rather than reinterpreted.
+ *
+ * Provenance and its limits, so nobody has to re-derive this later:
+ *   - It appears NOWHERE on the old gpr8.com. The old header rendered no logo at all,
+ *     and the only logo path in that codebase sat in unreachable dead code, pointing at
+ *     a PNG that was never deployed (it still 500s).
+ *   - The only source we could obtain was a 454px desktop screenshot, kept alongside
+ *     this work at .tmp/SOURCE-logo-screenshot.png.
+ *   - public/img/gpr-logo.svg was auto-traced from that screenshot (colour-separated,
+ *     vectorised per layer, recomposed with the sampled brand colours).
+ *
+ * It is faithful at every size the site uses it (16–48px) and indistinguishable from the
+ * original there. Above roughly 200px the traced curves show their raster origin.
+ * If GPR ever supplies the original vector (AI / EPS / SVG) or a high-resolution export,
+ * drop it in as public/img/gpr-logo.svg and delete this note — nothing else changes.
+ *
+ * Brand colours sampled from the source: #293E92 blue, #F0CB32 gold, #A8581A copper,
+ * #C7C7C7 silver.
+ */
+export function Mark({ className = "h-9 w-9" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" fill="none" className={className} aria-hidden="true">
-      <rect x="7" y="8" width="18" height="4.6" rx="1" fill="#E8CE7E" />
-      <rect x="5" y="14" width="22" height="4.6" rx="1" fill="#C8A44D" />
-      <rect x="9" y="20" width="14" height="4.6" rx="1" fill="#8A6D2B" />
-    </svg>
+    <img
+      src="/img/gpr-logo.svg"
+      alt=""
+      aria-hidden="true"
+      className={className}
+      // Intrinsic size of the traced artwork — prevents layout shift while it loads.
+      width={1362}
+      height={1260}
+    />
   );
 }
 
 export function Logo({ name }: { name: string }) {
   return (
     <span className="flex items-center gap-3">
-      <Mark className="h-8 w-8 shrink-0" />
+      <Mark className="h-10 w-10 shrink-0" />
       <span className="flex flex-col leading-none">
         <span className="font-display text-xl font-bold tracking-wide text-ink">
           GPR

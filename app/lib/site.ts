@@ -8,7 +8,10 @@
  */
 export const SITE = {
   domain: "gpr8.com",
-  url: "https://www.gpr8.com",
+  // Canonical is the APEX. www.gpr8.com 308-redirects here (which is also what the old
+  // Hostinger site did), so every canonical tag, sitemap entry and hreflang must point
+  // at the apex — pointing them at a URL that redirects is a self-inflicted SEO wound.
+  url: "https://gpr8.com",
   email: "ops@globalpresources.com",
   phone: "+852 5617 8624",
   // E.164, for the tel: link — the display string above carries the spaces.

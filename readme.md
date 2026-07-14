@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GPR — Global Partner & Resources Limited
 
-## Getting Started
+The public site for a Hong Kong physical bullion dealer. Next.js App Router, three
+locales (`en`, `zh-hant`, `zh-hans`), deployed on Vercel at **[gpr8.com](https://gpr8.com)**.
 
-First, run the development server:
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # every key in here is optional; see below
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Useful checks: `npm run typecheck`, `npm run lint`, `npm run build`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploying
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`main` is the production branch, and it is connected to Vercel: **pushing to `main`
+deploys the live site.** Any other branch gets a preview URL.
 
-## Learn More
+This is deliberate, and it replaced a worse setup. Until July 2026 the project had no Git
+connection at all — production was whatever someone last uploaded with `vercel --prod`
+from their laptop, including uncommitted edits. That meant the repo was not a record of
+what the public was actually being served. Now it is. Don't reintroduce a manual
+`vercel --prod` habit; push instead.
 
-To learn more about Next.js, take a look at the following resources:
+## The price panel — read this before touching it
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The homepage quotes an indicative bid and ask, derived from live gold spot. It is the one
+part of this site where being wrong costs money, so it has rules.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Gold comes from a live feed** ([gold-api.com](https://api.gold-api.com/price/XAU)),
+  refreshed every 5 minutes. FX (USD→HKD/CNY) comes from Frankfurter's ECB daily rates.
+  Neither needs an API key.
+- **`METAL_PRICE_API_KEY` is optional** and is now only an FX fallback. It used to be the
+  gold source, and that was the bug: its free plan publishes a single daily close stamped
+  23:59:59 UTC, so the site rendered "as of 07:59 HKT" and served a price up to two days
+  stale. At one point that was 2.6% above the real market — wider than the entire 1.5%
+  dealing spread — meaning the site advertised a bid *above* what gold was actually worth.
+  Do not put a once-daily source back in front of this panel.
+- **A stale or implausible price is refused, not displayed.** Quotes older than 72 hours
+  (enough slack for the weekend market close) or outside a sane USD/oz band render as
+  "unavailable". On a page about the price of gold, "call us" is a fine answer and a wrong
+  number is not.
 
-## Deploy on Vercel
+## Layout
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/[lang]/        pages, one route group per locale
+app/components/    spot-panel.tsx is the price panel
+app/lib/spot.ts    price fetching, the spread, and the staleness guards
+middleware.ts      locale detection and redirects
+```
